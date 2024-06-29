@@ -7,16 +7,53 @@ This project covers the Assessment 1 of Module 1 in the Eth+Avax Intermediate Co
 
 The code deploys a contract named AirTrafficControl which uses revert(), require() and assert() statements withing functions to perform some basic operations required by the ATC like:
 * Establishing connection with the pilots:
-  **function contactPilots(bool connection) where the arguments "false" implies connection not established and "true" implies connection successfully established respectively.
-  **In case the argument reads "false", the contract is REVERTED to the previous state. 
+  * Function contactPilots(bool connection) where the arguments "false" implies connection not established and "true" implies connection successfully established respectively.
+  * In case the argument reads "false", the contract is REVERTED to the previous state.
+  *Revert Statement:
+```
+//function to show the use of revert() statement
+    function contactPilots(bool connection) public pure returns(string memory) {
+        if(!connection){
+            revert("Unable to connect with the Pilots!");
+        }
+        return "ATC: Connection established with the Pilots";
+    }
+```
 * Checking weather condition for take off:
-  **function clearWeather(uint _windSpeed) where the argument is REQUIRE to be less than 35 knots,
-  **if the REQUIRE condition evaluates to "false" with the argument value >=35 knots then an error occurs and a message showing the unsuitablibility of the weather condition for a takeoff is displayed. 
+  * Function clearWeather(uint _windSpeed) where the argument is REQUIRE to be less than 35 knots,
+  * If the REQUIRE condition evaluates to "false" with the argument value >=35 knots then an error occurs and a message showing the unsuitablibility of the weather condition for a takeoff is displayed.
+  * Require Statement:
+```
+//function to show the use of require() statement
+    function clearWeather(uint _windSpeed) public pure returns(string memory){
+        require(_windSpeed<35, "Bad weather conditions(>35 knots)...Please reschedule flight!");
+        return "Wind Speed is Optimal: Ready to takeoff";
+    }
+```
 * Assigning a runway to a flight:
-  **function assignRunway(uint _checkRunway) where we ASSERT that the argument is always greater than 0 and less than 9.
-  **a runway is a countable (natural) number so it should never be 0
-  **the available number of total runways we have is 9 validated by an array declared in the beginning of the contract "uint[] runwayStatus=[0,0,1,0,1,1,0,0,1]".
-  **Each index of the array is a runway, Therefore, we keep the userinput runway to check (uint _checkRunway) in sync with the index by adding 1 to the input.  
+  * Function assignRunway(uint _checkRunway) where we ASSERT that the argument is always greater than 0 and less than 9.
+  * A runway is a countable (natural) number so it should never be 0
+  * The available number of total runways we have is 9 validated by an array declared in the beginning of the contract body "uint[] runwayStatus=[0,0,1,0,1,1,0,0,1]".
+```
+//The array defined within the contract body: 
+uint[] runwayStatus=[0,0,1,0,1,1,0,0,1];
+```
+  * Each index of the array is a runway, Therefore, we keep the userinput runway to check (uint _checkRunway) in sync with the index by adding 1 to the input.
+  * Assert Statement:
+```
+//function to show the use of assert() statement
+    function assignRunway(uint _checkRunway) public view returns (string memory){
+        assert(_checkRunway>0 && _checkRunway<9);
+        
+        if(runwayStatus [_checkRunway-1]== 1){
+            return "Runway is Occupied...Please check for clear status on another runway"; 
+        }
+        else {
+            return "Runway is available";
+        }   
+            
+    }
+```
 
 ### Executing program
 
