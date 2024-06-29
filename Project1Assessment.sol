@@ -22,7 +22,7 @@ contract AirTrafficControl{
 
     //function to show the use of assert() statement
     function assignRunway(uint _checkRunway) public view returns (string memory){
-        assert(_checkRunway>0 && _checkRunway<9);
+        assert(_checkRunway>0 && _checkRunway<=9);
         
         if(runwayStatus [_checkRunway-1]== 1){
             return "Runway is Occupied...Please check for clear status on another runway"; 
